@@ -6,7 +6,7 @@ import pyautogui
 
 def turn_card():
     for i in range(16):
-        buttons[i].config(text=f"{imgs[i]}")
+        buttons[i].config(image=tk.PhotoImage(file=imgs[i]))
     root.after(2000, turn_card_back)
 
 
@@ -20,7 +20,7 @@ def turn_card_back():
         if a > 0:
             continue
         else:
-            buttons[i].config(text=" ")
+            buttons[i].config(image=photo)
 
 
 def game_start():
@@ -45,16 +45,13 @@ def game_start():
     imgs = []
 
     # Load image
-    try:
-        photo = tk.PhotoImage(file="C:\\Users\\user\\Desktop\\high\\default_img.png")
-    except tk.TclError:
-        print("Image file not found. Ensure the path is correct.")
-        return
+
 
     # Initialize and shuffle image indices
     for i in range(1, 9):
-        imgs.append(i)
-        imgs.append(i)
+        img = f"C:\\Users\\user\\Desktop\\high\\img{i}.png"
+        imgs.append(img)
+        imgs.append(img)
 
     random.shuffle(imgs)
 
@@ -99,8 +96,8 @@ def time():
 
 
 def clear_t(n, m):
-    buttons[n].config(text="      ")
-    buttons[m].config(text="      ")
+    buttons[n].config(image=photo))
+    buttons[m].config(image=photo)
 
 
 def click_btn(num):
@@ -110,18 +107,18 @@ def click_btn(num):
         return
 
     if click == 0:
-        buttons[num - 1].config(text=f"{imgs[num - 1]}")
+        buttons[num - 1].config(image=tk.PhotoImage(file=imgs[num - 1]))
         first_num = num - 1
         click = 1
         try1.append(first_num)
     else:
-        buttons[num - 1].config(text=f"{imgs[num - 1]}")
+        buttons[num - 1].config(image=tk.PhotoImage(file=imgs[num - 1]))
         try1.append(num - 1)
         if imgs[first_num] == imgs[num - 1]:
             score1 += 100
             if len(try1) == 16:
                 for i in range(16):
-                    buttons[i].config(text="      ")
+                    buttons[i].config(image=photo)
                 random.shuffle(imgs)
                 try1.clear()
                 turn_card()
@@ -158,7 +155,7 @@ try:
             rank.append([a, int(b)])
 except FileNotFoundError:
     print("Score board file not found. Starting with an empty leaderboard.")
-
+photo = tk.PhotoImage(file="C:\\Users\\user\\Desktop\\high\\default_img.png")
 # Create rank labels
 rank1 = tk.Label(
     root,
